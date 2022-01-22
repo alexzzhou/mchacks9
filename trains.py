@@ -46,64 +46,30 @@ class L8Train(Train):
         self.size = 400
         self.time = 0
 
-<<<<<<< HEAD
-class Track:
-    def __init__(self):
-        pass
-
-class Station:
-    q_people = asy.Queue()
-    
-    def __init__(self, name, num_people, time_to_next):
-        self.name = name
-        self.num_people = num_people
-        q_people.put((num_people, current_t))
-        self.time_to_next = time_to_next
-    
-    def addPeople(self, num):
-	    self.num_people += num
-
-    def getNumPeople(self):
-	    return self.num_people
-    
-    def getName(self):
-	    return self.name
-
-    def getTimeToNext(self):
-	    return self.time_to_next
-
-    def trainTake(train):
-        pass
-=======
 #Class to represent a station
 class Station:
     q = []
     def __init__(self, name, group, time_to_next, next_station):
-	self.name = name
-	q.append(group)
-	self.time_to_next = time_to_next
-	self.next_station = next_station
+        self.name = name
+        q.append(group)
+        self.time_to_next = time_to_next
+        self.next_station = next_station
     
     def addPeople(group):
-	q.append(group)
+        q.append(group)
 
     def trainTake(train):
-	if train.size <= 0:
-	    pass
-	else:
-	    current_g = q[0]
-	    if current_g == None:
-		pass
-	    else if current_g.size <= train.size:
-		train.size = train.size - current_g.size
-		q.pop(0)
-	    else if current_g.size > train.size:
-		current_g.size = current_g.size - train.size
-	
-	    
-	
-	
->>>>>>> f10c89cf208e61f4647436a6dd6a933993c4370c
+        if train.size <= 0:
+            pass
+	    else:
+            current_g = q[0]
+            if current_g == None:
+                pass
+            else if current_g.size <= train.size:
+                train.size = train.size - current_g.size
+                q.pop(0)
+            else if current_g.size > train.size:
+                current_g.size = current_g.size - train.size
 
 #You ned to know the location of passenger groups at each moment, but it shouldn't matter once they board the traim
 class PassengerGroup:
