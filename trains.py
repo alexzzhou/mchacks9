@@ -1,9 +1,8 @@
 import sys
 import pandas as pd
 import numpy as np
-import asyncio as asy
 
-CURRENT_T = (7,0)
+CURRENT_T = 0
 PEAK = 10
 TOTALPEOPLE = 4600
 PEOPLEA = 1100
@@ -47,27 +46,33 @@ class L8Train(Train):
         self.size = 400
         self.time = 0
 
+#Class to represent a station
 class Station:
-    q_people = asy.Queue()
-    def __init__(self, name, num_people, time_to_next):
+    q = []
+    def __init__(self, name, group, time_to_next, next_station):
 	self.name = name
-	self.num_people = num_people
-	q_people.put((num_people, current_t))
+	q.append(group)
 	self.time_to_next = time_to_next
+	self.next_station = next_station
     
-    def addPeople(num):
-	self.num_people += num
-    
-    def getNumPeople():
-	return self.num_people
-    
-    def getName():
-	return self.name
-
-    def getTimeToNext()
-	return self.time_to_next
+    def addPeople(group):
+	q.append(group)
 
     def trainTake(train):
+	if train.size <= 0:
+	    pass
+	else:
+	    current_g = q[0]
+	    if current_g == None:
+		pass
+	    else if current_g.size <= train.size:
+		train.size = train.size - current_g.size
+		q.pop(0)
+	    else if current_g.size > train.size:
+		current_g.size = current_g.size - train.size
+	
+	    
+	
 	
 
 #You ned to know the location of passenger groups at each moment, but it shouldn't matter once they board the traim
