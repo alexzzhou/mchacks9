@@ -47,28 +47,33 @@ class L8Train(Train):
         self.size = 400
         self.time = 0
 
+class Track:
+    def __init__(self):
+        pass
+
 class Station:
     q_people = asy.Queue()
+    
     def __init__(self, name, num_people, time_to_next):
-	self.name = name
-	self.num_people = num_people
-	q_people.put((num_people, current_t))
-	self.time_to_next = time_to_next
+        self.name = name
+        self.num_people = num_people
+        q_people.put((num_people, current_t))
+        self.time_to_next = time_to_next
     
-    def addPeople(num):
-	self.num_people += num
-    
-    def getNumPeople():
-	return self.num_people
-    
-    def getName():
-	return self.name
+    def addPeople(self, num):
+	    self.num_people += num
 
-    def getTimeToNext()
-	return self.time_to_next
+    def getNumPeople(self):
+	    return self.num_people
+    
+    def getName(self):
+	    return self.name
+
+    def getTimeToNext(self):
+	    return self.time_to_next
 
     def trainTake(train):
-	
+        pass
 
 #You ned to know the location of passenger groups at each moment, but it shouldn't matter once they board the traim
 class PassengerGroup:
@@ -89,7 +94,16 @@ class PassengerGroup:
         self.wait_time += 1
 
 
-def increment():
-    
-main:
+#def increment():
 
+A = Station()
+AB = Track()
+B = Station()
+BC = Track ()
+C = Station()
+
+TRACK = [A, AB, B, BC, C]
+
+def main():
+
+    
