@@ -4,6 +4,8 @@ GIRAFFE is a simple railway optimisation solution for the RailVision Mchacks Cha
 as a highly efficient solution in a highly specific manner, but can also be applied in a variety of passenger traffic models. 
 Use the tools offered by GIRAFFE to extensively test and visualize our algorithm.
 
+This project is a collaboration between Gary Zhang, Alex Zhou, Faith Ruetas, and Felipe Lazcano.
+
 ## Getting Started
 
 Use files found under testing to test a given train schedule on a passenger schedule with tester.py, and use trainVisualizer.py alongside to visualize. 
