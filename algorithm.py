@@ -142,5 +142,31 @@ def main():
 
     ##### final third
     # gary's algorithm to find groups
+
+    x = 0
+    y = 0
+    group1 = 0
+    group2 = 0
+    slots = ((180 - CURRENT_T)/60) + 1
+    trains = 16 - train_count
+    i = slots
+
+    #checking first for loop condition
+    while True:
+        if (i * trains >= slots):
+            i = i - 1
+        else:
+            break    
+
+    group1 = i+1
+    group2 = i
+
+    for j in range(slots +1):
+        if (group1 * j + group2 * (slots - j)) == trains:
+            x = j
+            y = (slots - j)
+            break
+
+
     
     schedule = pd.DataFrame(TrainNum, TrainType, A_ArrivalTime, A_AvailCap, A_Boarding, B_ArrivalTime, B_AvailCap, B_Boarding, C_ArrivalTime, C_AvailCap, C_Boarding, U_Arrival, U_AvailCap, U_Offloading)
