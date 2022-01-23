@@ -1,32 +1,6 @@
 import pandas as pd
 import time
 
-'''
-def addTrain(Station, TrainNum, TrainType, ArrivalTime, AvailCap, Boarding):
-    index = TrainNum - 1
-    
-    if(Station == "A"):
-        TrainNum[index] = TrainNum
-        TrainType[index] = TrainType
-        A_ArrivalTime[index] = ArrivalTime
-        A_AvailCap[index] = AvailCap
-        A_Boarding[index] = Boarding
-
-    if(Station == "B"):
-        TrainNum[index] = TrainNum
-        TrainType[index] = TrainType
-        B_ArrivalTime[index] = ArrivalTime
-        B_AvailCap[index] = AvailCap
-        B_Boarding[index] = Boarding
-
-    if(Station == "C"):
-        TrainNum[index] = TrainNum
-        TrainType[index] = TrainType
-        C_ArrivalTime[index] = ArrivalTime
-        C_AvailCap[index] = AvailCap
-        C_Boarding[index] = Boarding
-'''
-
 def calculateTime(current_time):
     time = ""
 
@@ -58,14 +32,8 @@ def main():
     B_Passengers = [50,75,100,125,150,175,150,125,100,100,75,75,50,45,35,25,20,15,10]
     C_Passengers = [50,100,150,200,250,200,175,150,150,125,100,75,50,50,45,40,35,30,25]
 
-    passenger_arrivals = [A_Passengers, B_Passengers, C_Passengers]
-
     L4Trains = 4
     L8Trains = 12
-
-    cur_station_A = 0
-    cur_station_B = 0
-    cur_station_C = 0
     
     cur_time = 0
 
@@ -175,4 +143,4 @@ def main():
     ##### final third
     # gary's algorithm to find groups
     
-    schedule = pd.DataFrame()
+    schedule = pd.DataFrame(TrainNum, TrainType, A_ArrivalTime, A_AvailCap, A_Boarding, B_ArrivalTime, B_AvailCap, B_Boarding, C_ArrivalTime, C_AvailCap, C_Boarding, U_Arrival, U_AvailCap, U_Offloading)
