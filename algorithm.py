@@ -1,32 +1,6 @@
 import pandas as pd
 import time
 
-'''
-def addTrain(Station, TrainNum, TrainType, ArrivalTime, AvailCap, Boarding):
-    index = TrainNum - 1
-    
-    if(Station == "A"):
-        TrainNum[index] = TrainNum
-        TrainType[index] = TrainType
-        A_ArrivalTime[index] = ArrivalTime
-        A_AvailCap[index] = AvailCap
-        A_Boarding[index] = Boarding
-
-    if(Station == "B"):
-        TrainNum[index] = TrainNum
-        TrainType[index] = TrainType
-        B_ArrivalTime[index] = ArrivalTime
-        B_AvailCap[index] = AvailCap
-        B_Boarding[index] = Boarding
-
-    if(Station == "C"):
-        TrainNum[index] = TrainNum
-        TrainType[index] = TrainType
-        C_ArrivalTime[index] = ArrivalTime
-        C_AvailCap[index] = AvailCap
-        C_Boarding[index] = Boarding
-'''
-
 def calculateTime(current_time):
     time = ""
 
@@ -58,14 +32,8 @@ def main():
     B_Passengers = [50,75,100,125,150,175,150,125,100,100,75,75,50,45,35,25,20,15,10]
     C_Passengers = [50,100,150,200,250,200,175,150,150,125,100,75,50,50,45,40,35,30,25]
 
-    passenger_arrivals = [A_Passengers, B_Passengers, C_Passengers]
-
     L4Trains = 4
     L8Trains = 12
-
-    cur_station_A = 0
-    cur_station_B = 0
-    cur_station_C = 0
     
     cur_time = 0
 
@@ -163,42 +131,66 @@ def main():
                 if(L4Trains > 0):
                     addTrain("A", train_count + 1, "L4", calculateTime(cur_time + 7), 200, A_Passengers[cur_time/10], A_remaining)
                     train_count += 1
+                    L4Trains -= 1
+
                 else:
                     addTrain("A", train_count + 1, "L8", calculateTime(cur_time + 7), 200, A_Passengers[cur_time/10], A_remaining)
                     train_count += 1
+                    L8Trains -= 1
 
             addTrain("A", train_count + 1, "L8", calculateTime(cur_time - 2), 200, A_Passengers[cur_time/10], A_remaining)
             train_count += 1
+            L8Trains -= 1
 
         cur_time += 10
 
     ##### final third
     # gary's algorithm to find groups
-
-    x = 0
-    y = 0
-    group1 = 0
-    group2 = 0
-    slots = ((180 - CURRENT_T)/60) + 1
+    smallNumGroup = 0
+    largeNumGroup = 0
+    smallGroup = 0
+    largeGroup = 0
+    slots = ((190 - cur_time)/10)
     trains = 16 - train_count
     i = slots
 
-    #checking first for loop condition
-    while True:
-        if (i * trains >= slots):
-            i = i - 1
-        else:
-            break    
+    #checking first for loop condition  
+    while(i * trains >= slots):
+        i = i - 1
 
-    group1 = i+1
-    group2 = i
+    smallGroup = i+1
+    largeGroup = i
 
-    for j in range(slots +1):
-        if (group1 * j + group2 * (slots - j)) == trains:
-            x = j
-            y = (slots - j)
+    for j in range(slots + 1):
+        if (smallGroup * j + largeGroup * (slots - j)) == trains:
+            smallNumGroup = j
+            largeNumGroup = (slots - j)
             break
+
+    sendTime = 0
+    
+    for group1 in range(smallNumGroup):
+        sendTime = cur_time + (10*(smallGroup-1))
+        if(L8Trains > 0):
+            addTrain("A", train_count + 1, "L8", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L8Trains -= 1
+        else:
+            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L4Trains -= 1
+        
+    for group2 in range(largeNumGroup):
+        sendTime = cur_time + (10*(largeGroup-1))
+        if(L8Trains > 0):
+            addTrain("A", train_count + 1, "L8", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L8Trains -= 1
+        else:
+            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L4Trains -= 1
 
 
     
-    schedule = pd.DataFrame()
+    schedule = pd.DataFrame(TrainNum, TrainType, A_ArrivalTime, A_AvailCap, A_Boarding, B_ArrivalTime, B_AvailCap, B_Boarding, C_ArrivalTime, C_AvailCap, C_Boarding, U_Arrival, U_AvailCap, U_Offloading)
