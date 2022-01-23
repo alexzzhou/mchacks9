@@ -1,4 +1,4 @@
-﻿import pygame
+import pygame
 #import trains.py
 
 pygame.init()
@@ -10,6 +10,7 @@ bg = pygame.image.load('background.png')
 bg = pygame.transform.scale(bg, (649, 451))
 
 font = pygame.font.Font('Manrope-Bold.ttf', 24)
+#nice font
 
 A = (110, 126)
 B = (306, 126)
@@ -17,13 +18,8 @@ BC = (342, 194)
 C = (505, 205)
 US = (515, 377)
 
-
-def move(
-    origin,
-    destination,
-    current,
-    time,
-    ):
+#function move
+def move(origin,destination,current,time):
     (x1, y1) = origin
     (x2, y2) = destination
     (curx, cury) = current
@@ -31,7 +27,7 @@ def move(
         return destination
     return (curx + (x2 - x1) / time, cury + (y2 - y1) / time)
 
-
+#trying to make a beautiful UI
 def displayUI():
     clock = font.render('07:00', True, (0, 0, 0))
     traincount = font.render('L4: 4/4   L8: 12/12', True, (0, 0, 0))
@@ -69,15 +65,14 @@ def displayUI():
     screen.blit(TotalCount, TCR)
     screen.blit(US, USR)
 
-
+#this is how the game moves
 def game():
     trains = []  # (train, position, destination, wait)
     while True:
         screen.blit(bg, (0, 0))
         for t in trains:
 
-            next = move(t[0].destination, t[0].destination, t[1],
-                        t[0].timetotravel)  # complete with train object
+            next = move(t[0].destination, t[0].destination, t[1], t[0].timetotravel)  # complete with train object
             if next == destination:
                 if destination == A:
                     destination = B
