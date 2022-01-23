@@ -131,41 +131,65 @@ def main():
                 if(L4Trains > 0):
                     addTrain("A", train_count + 1, "L4", calculateTime(cur_time + 7), 200, A_Passengers[cur_time/10], A_remaining)
                     train_count += 1
+                    L4Trains -= 1
+
                 else:
                     addTrain("A", train_count + 1, "L8", calculateTime(cur_time + 7), 200, A_Passengers[cur_time/10], A_remaining)
                     train_count += 1
+                    L8Trains -= 1
 
             addTrain("A", train_count + 1, "L8", calculateTime(cur_time - 2), 200, A_Passengers[cur_time/10], A_remaining)
             train_count += 1
+            L8Trains -= 1
 
         cur_time += 10
 
     ##### final third
     # gary's algorithm to find groups
-
-    x = 0
-    y = 0
-    group1 = 0
-    group2 = 0
-    slots = ((180 - CURRENT_T)/60) + 1
+    smallNumGroup = 0
+    largeNumGroup = 0
+    smallGroup = 0
+    largeGroup = 0
+    slots = ((190 - cur_time)/10)
     trains = 16 - train_count
     i = slots
 
-    #checking first for loop condition
-    while True:
-        if (i * trains >= slots):
-            i = i - 1
-        else:
-            break    
+    #checking first for loop condition  
+    while(i * trains >= slots):
+        i = i - 1
 
-    group1 = i+1
-    group2 = i
+    smallGroup = i+1
+    largeGroup = i
 
-    for j in range(slots +1):
-        if (group1 * j + group2 * (slots - j)) == trains:
-            x = j
-            y = (slots - j)
+    for j in range(slots + 1):
+        if (smallGroup * j + largeGroup * (slots - j)) == trains:
+            smallNumGroup = j
+            largeNumGroup = (slots - j)
             break
+
+    sendTime = 0
+    
+    for group1 in range(smallNumGroup):
+        sendTime = cur_time + (10*(smallGroup-1))
+        if(L8Trains > 0):
+            addTrain("A", train_count + 1, "L8", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L8Trains -= 1
+        else:
+            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L4Trains -= 1
+        
+    for group2 in range(largeNumGroup):
+        sendTime = cur_time + (10*(largeGroup-1))
+        if(L8Trains > 0):
+            addTrain("A", train_count + 1, "L8", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L8Trains -= 1
+        else:
+            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            train_count += 1
+            L4Trains -= 1
 
 
     
