@@ -15,5 +15,5 @@ Documentation is coming soon.
 
 ## Upcoming Changes
 
-We're constantly looking to improve our algorithm. In the meantime, look out for QOL improvements for the visualizer. 
+We are constantly looking to improve our algorithm. In the meantime, look out for QOL improvements for the visualizer. 
 
