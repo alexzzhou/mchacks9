@@ -6,7 +6,7 @@ def calculateTime(current_time):
 
     time += str(7 + current_time//60)
     time += ":"
-    time += str(7 + current_time%60)
+    time += str(current_time%60)
 
     return time
 
@@ -44,12 +44,12 @@ def main():
     overflow = 0
     train_count = 0
 
-    def addTrain(Station, TrainNum, TrainType, ArrivalTime, AvailCap, PossiblePassengers, X_remaining):
-        index = TrainNum - 1
+    def addTrain(Station, P_TrainNum, P_TrainType, ArrivalTime, AvailCap, PossiblePassengers, X_remaining):
+        index = P_TrainNum - 1
         
         if(Station == "A"):
-            TrainNum[index] = TrainNum
-            TrainType[index] = TrainType
+            TrainNum[index] = P_TrainNum
+            TrainType[index] = P_TrainType
             A_ArrivalTime[index] = ArrivalTime
             A_AvailCap[index] = AvailCap
 
@@ -67,8 +67,8 @@ def main():
                 X_remaining -= PossiblePassengers
 
         elif(Station == "B"):
-            TrainNum[index] = TrainNum
-            TrainType[index] = TrainType
+            TrainNum[index] = P_TrainNum
+            TrainType[index] = P_TrainType
             B_ArrivalTime[index] = ArrivalTime
             B_AvailCap[index] = AvailCap
             
@@ -86,8 +86,8 @@ def main():
                 X_remaining -= PossiblePassengers
 
         elif(Station == "C"):
-            TrainNum[index] = TrainNum
-            TrainType[index] = TrainType
+            TrainNum[index] = P_TrainNum
+            TrainType[index] = P_TrainType
             C_ArrivalTime[index] = ArrivalTime
             C_AvailCap[index] = AvailCap
 
@@ -112,9 +112,9 @@ def main():
     L4Trains -= 1
 
     # send a train to A immediately after C leaves
-    addTrain("A", train_count + 1, "L4", calculateTime(cur_time), 200, (A_Passengers[0] + A_Passengers[1]), A_remaining)
+    addTrain("A", train_count + 1, "L8", calculateTime(cur_time), 400, (A_Passengers[0] + A_Passengers[1]), A_remaining)
     train_count += 1
-    L4Trains -= 1
+    L8Trains -= 1
 
     cur_time = 10
 
@@ -134,11 +134,11 @@ def main():
                     L4Trains -= 1
 
                 else:
-                    addTrain("A", train_count + 1, "L8", calculateTime(cur_time + 7), 200, A_Passengers[cur_time/10], A_remaining)
+                    addTrain("A", train_count + 1, "L8", calculateTime(cur_time + 7), 400, A_Passengers[cur_time/10], A_remaining)
                     train_count += 1
                     L8Trains -= 1
 
-            addTrain("A", train_count + 1, "L8", calculateTime(cur_time - 2), 200, A_Passengers[cur_time/10], A_remaining)
+            addTrain("A", train_count + 1, "L8", calculateTime(cur_time - 2), 400, A_Passengers[cur_time/10], A_remaining)
             train_count += 1
             L8Trains -= 1
 
@@ -176,7 +176,7 @@ def main():
             train_count += 1
             L8Trains -= 1
         else:
-            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 200, A_Passengers[cur_time/10], A_remaining)
             train_count += 1
             L4Trains -= 1
         
@@ -187,10 +187,17 @@ def main():
             train_count += 1
             L8Trains -= 1
         else:
-            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 400, A_Passengers[cur_time/10], A_remaining)
+            addTrain("A", train_count + 1, "L4", calculateTime(sendTime), 200, A_Passengers[cur_time/10], A_remaining)
             train_count += 1
             L4Trains -= 1
 
 
     
-    schedule = pd.DataFrame(TrainNum, TrainType, A_ArrivalTime, A_AvailCap, A_Boarding, B_ArrivalTime, B_AvailCap, B_Boarding, C_ArrivalTime, C_AvailCap, C_Boarding, U_Arrival, U_AvailCap, U_Offloading)
+    schedule = pd.DataFrame(TrainNum, TrainType, A_ArrivalTime, A_AvailCap, A_Boarding, B_ArrivalTime, \
+            B_AvailCap, B_Boarding, C_ArrivalTime, C_AvailCap, C_Boarding, U_Arrival, U_AvailCap, U_Offloading)
+
+    print("hello, its meeeee")
+    schedule.head()
+
+if __name__ == "__main__":
+    main()
