@@ -35,7 +35,7 @@ class Train:
         self.skips = skips
 
     def skip(self):
-        if self.track.name != "A" or self.track.name != "B" or self.track.name != "C":
+        if self.track.name not in ["A","B","C"]:
             print('ERROR: cannot skip if not at station.')
             return 1
         self.time = 0
@@ -137,10 +137,6 @@ class Station(Track):
                 self.total -= self.groups[0].size
                 self.groups.pop(0)
 
-            
-            print(glovar.BOARDEDPEEPS)
-            print(glovar.WAITTIME)
-                
 
 
 #def increment():
@@ -156,7 +152,10 @@ def send_train(trains: typing.List[Train], type: str, skips = []):
         trains.append(new_train)
 
 #Global variables of each station, linked in a linked list
-C = Station("C", None)
+
+US = Station("US", None)
+CU = Track("CU", US, 11)
+C = Station("C", CU)
 BC = Track("BC", C, 9)
 B = Station("B", BC)
 AB = Track("AB", B, 8)
@@ -165,6 +164,7 @@ A = Station("A", AB)
 
 def main():
     
+    print("Starting Code")
     stations = [A, B, C]
     #Setting up global variables
     glovar = GlobalVar()
@@ -187,7 +187,8 @@ def main():
     all_trains = []
 
     #main loop
-    while glovar.CURRENT_T < 3:
+    #====================================================================================
+    while glovar.CURRENT_T < 230:
         
         #checking if at the current increment passengers should the added to the stations
         if len(passenger_times) == 0:
@@ -201,37 +202,39 @@ def main():
                 stations[i].addGroup(new_group)
 
         #checking if at the current increment a train should be sent
-        if len(train_times) == 0:
-            pass
-        else:
-            while glovar.CURRENT_T == train_times[0]:
-                train_times.pop(0)
-                train_values = schedule.pop(0)
-                if len(train_values) == 3:
-                    send_train(all_trains, str(train_values[1]), [str(train_values[2])])
-                elif len(train_values) == 4:
-                    send_train(all_trains, str(train_values[1]), [str(train_values[2]), str(train_values[3])])
-                else:
-                    send_train(all_trains, str(train_values[1]))
+
+        while len(train_times) != 0 and glovar.CURRENT_T == train_times[0]:
+            train_times.pop(0)
+            train_values = schedule.pop(0)
+            if len(train_values) == 3:
+                send_train(all_trains, str(train_values[1]), [str(train_values[2])])
+            elif len(train_values) == 4:
+                send_train(all_trains, str(train_values[1]), [str(train_values[2]), str(train_values[3])])
+            else:
+                send_train(all_trains, str(train_values[1]))
+        
         
         #loops through all the trains to update their position
         for i in all_trains:
-
-            #checking if the train has finished at C
-            if i.track.next == None:
-                all_trains.pop(0)
             
+                
             #checking if the train should skip a station
             if i.track.name in i.skips and i.time == 0:
                 i.skip()
 
-            i.increment()
-            
-            #boarding passengers onto the train
-            if i.time >= 0 and i.time < 3 and isinstance(i.track, Station) and i.size != 0:
+             #boarding passengers onto the train
+            if i.time >= 0 and i.time < 3 and isinstance(i.track, Station) and i.size > 0:
                 boarders = min(i.size, i.track.total)
                 i.board(boarders)
                 i.track.boardTrain(boarders, glovar)
+
+            #incrementing
+            i.increment()
+            
+            if i.track is US:
+                all_trains.pop(0)
+            
+           
 
         
         glovar.CURRENT_T += 1
@@ -241,14 +244,6 @@ def main():
     print(glovar.WAITTIME)
     print(glovar.BOARDEDPEEPS)
     print("Average Wait Time: "+ str(glovar.WAITTIME/glovar.BOARDEDPEEPS))
-
-    # for i in stations:
-    #     print(i)
-    #     for j in i.groups: 
-    #         print(j)
-
-    for i in all_trains:
-        print(i)
     
 
 if __name__ == "__main__":
