@@ -1,5 +1,4 @@
 import pandas as pd
-import time
 
 def calculateTime(current_time):
     time = ""
@@ -13,6 +12,14 @@ def calculateTime(current_time):
 
 def main():
 
+    passenger_arrivals = pd.read_csv('rail_data.csv')
+
+    A_arrivals = passenger_arrivals['A'].tolist()
+    print(A_arrivals)
+
+    
+
+    '''
     TrainNum = []
     TrainType = []
     A_ArrivalTime = []
@@ -192,12 +199,12 @@ def main():
             L4Trains -= 1
 
 
-    
+
     schedule = pd.DataFrame(TrainNum, TrainType, A_ArrivalTime, A_AvailCap, A_Boarding, B_ArrivalTime, \
             B_AvailCap, B_Boarding, C_ArrivalTime, C_AvailCap, C_Boarding, U_Arrival, U_AvailCap, U_Offloading)
 
     print("hello, its meeeee")
-    schedule.head()
+    schedule.head()'''
 
 if __name__ == "__main__":
     main()
