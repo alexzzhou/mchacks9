@@ -501,7 +501,7 @@ def main():
     # print(output_file)
 
     # uncomment the line below to convert the dataframe to a csv
-    # output_file.to_csv(index=False)
+    output_file.to_csv('train_schedule.csv', index=False)
 
 if __name__ == "__main__":
     main()
